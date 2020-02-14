@@ -123,6 +123,15 @@ PROMETHEUS_EXTERNAL_URL=${PROMETHEUS_EXTERNAL_URL:-$PROMETHEUS_DEFAULT_EXTERNAL_
 echo
 ALERTMANAGER_EXTERNAL_URL=${ALERTMANAGER_EXTERNAL_URL:-$ALERTMANAGER_DEFAULT_EXTERNAL_URL}
 
+# No dedicated nodes
+sed -i -e '/node_label_key/d' manifests/alertmanager/alertmanager.yaml
+sed -i -e '/nodeSelector:/d' manifests/alertmanager/alertmanager.yaml
+sed -i -e '/node_label_key/d' manifests/grafana/grafana.de.yaml
+sed -i -e '/node_label_key/d' manifests/kube-state-metrics/kube-state-metrics.de.yaml
+sed -i -e '/node_label_key/d' manifests/prometheus/prometheus-k8s.yaml
+sed -i -e '/nodeSelector:/d' manifests/prometheus/prometheus-k8s.yaml
+sed -i -e '/node_label_key/d' manifests/prometheus-operator/prometheus-operator.yaml
+
 #set prometheus operator version
 sed -i -e 's/PROMETHEUS_OPERATOR_VERSION/'"$PROMETHEUS_OPERATOR_VERSION"'/g' manifests/prometheus-operator/prometheus-operator.yaml
 
